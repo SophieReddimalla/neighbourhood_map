@@ -1,3 +1,11 @@
+/*
+|| This is javascript defines the View Model for the Neighbouhood Map Project.
+|| It adds functionality to the project by using Google Map and Foursquare
+|| API for diplaying pins and providing them information respectively..
+*/
+
+
+//Client ID and Client Secret for Foursquare API 
 var map, clientID, clientSecret;
 clientID = 'SQSGESXCSAYVICAACUP2PM2QKJVNFRKFVC4ISJMXMQE454U3';
 clientSecret = '2KV3KHVLV0DLQJ2YGB12TWXPH305HPNQ0LFLUIUNUSWMZBKI';
@@ -7,9 +15,9 @@ function ViewModel() {
 
     this.searchOption = ko.observable("");
     this.markers = [];
-
+    // BounceMarker function  animates the markers while also displays its InfoWindow
+    // and sets the timer for 1500s
     this.BounceMarker = function () {
-        //TODO : Open InfoWindow
         self.showInfoWindow(this, self.currentInfoWindow);
         this.setAnimation(google.maps.Animation.BOUNCE);
         setTimeout((function () {
@@ -18,7 +26,7 @@ function ViewModel() {
     };
 
     this.showInfoWindow = function (marker, currentInfoWindow) {
-
+         //The Foursquare API Url is been defined
         var fsApiUrl = 'https://api.foursquare.com/v2/venues/search' +
         '?ll=' +  marker.position.lat() + ',' + marker.position.lng() + 
         '&client_id=' + clientID +
@@ -26,14 +34,14 @@ function ViewModel() {
         '&query=' + marker.title +
         '&v=20170801' +
         '&limit=1' ;
-        
+        //The JSON extracts the data from Foursquare and assigns them 
         $.getJSON(fsApiUrl).done(function(json) {
             var response = json.response.venues[0];
             self.street = response.location.formattedAddress[0];
             self.city = response.location.formattedAddress[1];
             self.zip = response.location.formattedAddress[2];
             self.category = response.categories[0].name;
-            
+            //This is preparing the Infowindow's Html 
             self.infoWindowContent =
                 '<h5>' + marker.title + '</h5>' +
                 '<h5>(' + self.category +')</h5>' +
@@ -45,7 +53,7 @@ function ViewModel() {
                 '</div>' ;
                 currentInfoWindow.setContent(self.infoWindowContent);
         }).fail(function() {
-            // Send alert
+            // Send alert if the foursqaure api is not able to connect..
             alert(
                 "There was an Problem with Foursquare API. Please check your connection and try again."
             );
@@ -92,6 +100,8 @@ function ViewModel() {
     };
 
     this.initMap();
+    // The Location filter function takes in the data entered in the search checks it with markers title 
+    //for the characters being entered and sets the respective marker and  title visible and vice versa.
 
     this.LocationFilter = ko.computed(function () {
         var result = [];
@@ -108,13 +118,13 @@ function ViewModel() {
     }, this);
 }
 
-
+//This shows an error if the google api is not working..
 googleError = function googleError() {
     alert(
         'Oops. Google Maps did not load. Please refresh the page and try again!'
     );
 };
-
+//This applies all the binndings to the ViewModel function.
 function startApp() {
     ko.applyBindings(new ViewModel());
 };

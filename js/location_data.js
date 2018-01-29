@@ -1,3 +1,5 @@
+//This is an array of markers specifying its latitudes , longitudes and their titles.
+
 var locationData = [
     {
       title: "Somu's Cafe",
