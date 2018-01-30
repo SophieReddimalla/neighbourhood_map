@@ -119,11 +119,11 @@ function ViewModel() {
 }
 
 //This shows an error if the google api is not working..
-googleError = function googleError() {
-    alert(
-        'Oops. Google Maps did not load. Please refresh the page and try again!'
-    );
-};
+//Error callback for GMap API request
+function mapError() {
+    // Error handling
+   alert("There is trouble loading the google maps. Please refresh and try again.");
+}
 //This applies all the binndings to the ViewModel function.
 function startApp() {
     ko.applyBindings(new ViewModel());

@@ -10,8 +10,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/navbar-fixed-side.css" rel="stylesheet" />
     <link href="css/nbhm.css" rel="stylesheet" />
-    <!--  Knockout -->
-    <script src="js/knockout-3.4.2.js"></script>
+
 </head>
 
 <body>
@@ -35,17 +34,18 @@
 
                                 <li class="dropdown">
                                     <!-- The ul elements are binded by location filter function -->
-                                    <ul class="dropdown-menu" data-bind="foreach: LocationFilter">
+                                    <ul class="dropdown" data-bind="foreach: LocationFilter">
                                         <!-- It displays the title of the markers and the the markers bounce when clicked-->
-                                            <a href="#"><li data-bind="text: title, click: $parent.BounceMarker"></li></a>
+                                        <a href="#">
+                                            <li class="navbar-text" data-bind="text: title, click: $parent.BounceMarker"></li>
+                                        </a>
                                     </ul>
                                 </li>
                             </ul>
                             <form class="navbar-form navbar-left">
                                 <div class="form-group">
                                     <!-- The search box value is updated on every key down -->
-                                    <input class="form-control" placeholder="Search" 
-                                    data-bind="textInput: searchOption, valueUpdate: 'afterkeydown'"/>
+                                    <input class="form-control" placeholder="Search" data-bind="textInput: searchOption, valueUpdate: 'afterkeydown'" />
                                 </div>
                             </form>
                             <p class="navbar-text">
@@ -58,12 +58,14 @@
             </div>
             <!-- Main Map Window -->
 
-            <div  id='map'>
+            <div id='map'>
             </div>
         </div>
     </div>
 
     <!-- Javascripts used -->
+    <!--  Knockout -->
+    <script src="js/knockout-3.4.2.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/location_data.js"></script>
@@ -72,13 +74,16 @@
     <script>
         $(window).resize(function () {
             var h = $(window).height(),
-            offsetTop = 10; // Calculate the top offset
+                offsetTop = 10; // Calculate the top offset
             $('#map').css('height', (h - offsetTop));
-            }).resize();
+        }).resize();
     </script>
+
+
     <!--  The Google Map API is been called here -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXwV-2QCfRrOTNo1lRj6yM0fpkQ70kDrE&callback=startApp">
-    </script>    
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXwV-2QCfRrOTNo1lRj6yM0fpkQ70kDrE&callback=startApp" 
+        onerror="mapError()">
+    </script>
 
 </body>
 
