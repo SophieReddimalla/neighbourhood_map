@@ -64,7 +64,7 @@ function ViewModel() {
         
         
         currentInfoWindow.open(map,marker);
-    }
+    };
     this.initMap = function () {
         //set canvas and options of map - center of map at kharadi pune.
         var mapCanvas = document.getElementById('map');
@@ -95,7 +95,7 @@ function ViewModel() {
             
             this.new_marker.addListener('click', self.BounceMarker);
             this.markers.push(this.new_marker);
-            this.new_marker = null
+            this.new_marker = null;
         }
     };
 
@@ -127,4 +127,4 @@ googleError = function googleError() {
 //This applies all the binndings to the ViewModel function.
 function startApp() {
     ko.applyBindings(new ViewModel());
-};
+}
